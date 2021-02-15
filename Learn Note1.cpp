@@ -64,6 +64,8 @@ int main()
     shared_ptr<int> ptr4 = make_shared<int>(b);
     cout << *ptr4 << endl;//未更改前
     ptr4.reset(d);
+    //不要将get返回的普通指针再绑定到智能指针上
+    //如果将这里的d换成上面的ptr3 那么可能造成空悬指针 二次delete等问题
     cout << *ptr4 << endl;//更改之后 
     //此时不再需要用d管理内存 用ptr4即可 也就是普通指针转换成了智能指针
     //这里我们注意到 给智能指针分配的内存需要是new的 也就是动态内存
