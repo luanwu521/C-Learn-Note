@@ -62,18 +62,41 @@ int main()
     int c = 666;
     int* d = new int(c);
     shared_ptr<int> ptr4 = make_shared<int>(b);
-    cout << *ptr4 << endl;//未更改前
+    printf("value_ptr4:%d", *ptr4);//未更改前
     ptr4.reset(d);
+    cout << endl;
     //不要将get返回的普通指针再绑定到智能指针上
     //如果将这里的d换成上面的ptr3 那么可能造成空悬指针 二次delete等问题
-    cout << *ptr4 << endl;//更改之后 
+    printf("value_ptr4:%d", *ptr4);//更改之后 
+    cout << endl;
     //此时不再需要用d管理内存 用ptr4即可 也就是普通指针转换成了智能指针
     //这里我们注意到 给智能指针分配的内存需要是new的 也就是动态内存
     //因为我们的动态指针默认是用delete来释放内存的
     //当我们更改这个默认的释放操作时 也可以让智能指针绑定到其他类型的普通指针上
     //但一定要有一个合适的释放内存的操作来代替这个默认的delete操作
     //重载函数:ptr4.reset(d, fun) fun是一个可调用对象 用来替代delete
-    
+   
+
+    //我们想 一个动态数组是new出来的 而智能指针可以管理new内存
+    //那么自然我们可以用智能指针来管理动态数组
+    //事实上 shared_ptr是不支持直接管理动态数组的
+    //但是还有一种智能指针 名为unique_ptr
+    //顾名思义 这种指针将独占一块内存 只有他一个来管理这块内存
+    int m = 5;//动态数组成员数
+    unique_ptr<int[]> ptr5(new int[m]());
+    //new int[]和new int[]()有什么区别?
+    //前者其中的成员是没有初始化的
+    //后者进行了成员值初始化 值都为0
+    //还有个有意思的问题
+    //int arr[0];是错误的 我们不能定义一个长度为0的静态数组
+    //但这里m = 0是允许的 也就是new是允许为0的
+    //但是此时我们不能解引用指针 毕竟这个时候它不指向任何对象 因为数组长度为0
+    for (int j = 0; j < m; j++) {
+        ptr5[j] = j;//遍历数组给成员赋值
+    }
+    for (int j = 0; j < m; j++) {
+        printf("value_ptr5[%d]:%d\n", j, ptr5[j]);
+    }
     
     return 0;
 }
