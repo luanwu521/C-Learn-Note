@@ -6,7 +6,8 @@
 using namespace std;
 
 class Student {//定义一个学生类 提供两个基本的构造函数
-public:
+public://为了方便调试 就都定义成public的了
+	
 	string name = "";//姓名
 	string id = "";//学号
 	int age = 0;//年龄
@@ -29,7 +30,18 @@ public:
 			<< "Id:" << id << "  "
 			<< "Age:" << age << "  "
 			<< "Height:" << height << endl;
-	}
+	};
+
+	bool operator< (const Student& rhs) {//重载运算符<
+		//我们知道 运算符<是接受两个参数的
+		//也就是<的左边一个对象 右边一个对象 一共两个
+		//那我们在类里面定义这个operator 另外一个对象是隐式传入的 用this访问
+		//所以我们这里的形参只有一个rhs
+		return this->name < rhs.name;
+		//用this访问的是左边的对象
+		//作为形参的rhs是右边的对象
+	};
+
 };
 
 int main() 
@@ -84,12 +96,28 @@ int main()
 	//我们说sort()的第三个参数支持传入一个可调用对象 
 	//Lambda表达式可以理解为一种小函数 那么自然可以作为sort()的第三个参数
 	auto f1 = [](const Student& stu1, const Student& stu2) -> bool {return stu1.height > stu2.height; };
-	//可以用function<bool(const Student&, const Student&)>代替auto
+	//可以用std::function<bool(const Student&, const Student&)>代替auto
+	//使用std::function要记得#include <functional>
 	sort(vec_stu.begin(), vec_stu.end(), f1);
 	for (it = vec_stu.begin(); it != vec_stu.end(); it++) {//从头开始遍历到尾
 		it->print();//身高从高到低排 因为我们改变了不等号方向 从<改成了>
 	}
 	cout << "==========================================================" << endl;
 
+
+	//那我们如何在不定义可调用对象的情况下按照姓名的字典序从小到大排序呢?
+	//我们说 当不自定义排序操作时 将默认使用<进行排序
+	//那么这时候我们就要用operator重载运算符<
+	vec_stu[0].name = "Tdd";
+	vec_stu[1].name = "Jiang yilong";
+	vec_stu[2].name = "Xiaoming";
+	vec_stu[3].name = "Xiaohong";
+	vec_stu[4].name = "Xiaowang";
+	sort(vec_stu.begin(), vec_stu.end());//此时并没有传入第三个参数 默认以存储对象的<运算符排序
+	for (it = vec_stu.begin(); it != vec_stu.end(); it++) {//从头开始遍历到尾
+		it->print();//此时是按字典序升序排列
+	}
+	cout << "==========================================================" << endl;
+	
 	return 0;
 }
