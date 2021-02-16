@@ -1,7 +1,6 @@
 ﻿#include <iostream>
 #include <memory>
 using namespace std;
-
 int main()
 {
     //C++中使用new和delete来管理一块动态内存
@@ -74,7 +73,7 @@ int main()
     //当我们更改这个默认的释放操作时 也可以让智能指针绑定到其他类型的普通指针上
     //但一定要有一个合适的释放内存的操作来代替这个默认的delete操作
     //重载函数:ptr4.reset(d, fun) fun是一个可调用对象 用来替代delete
-   
+    
 
     //我们想 一个动态数组是new出来的 而智能指针可以管理new内存
     //那么自然我们可以用智能指针来管理动态数组
