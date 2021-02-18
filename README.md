@@ -14,7 +14,7 @@ Learn Note目录:
 
 2.重载运算符 泛型算法相关
 
-3.SetConsoleTextAttribute() 更改cmd输出文字属性
+3.更改控制台文字属性
 
 4.数据结构tuple相关
 
