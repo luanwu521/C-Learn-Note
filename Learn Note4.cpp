@@ -36,7 +36,7 @@ int main()
 	cout << "Height:" << height << endl;
 	cout << "===========================" << endl;
 
-	//我们考虑创建一个学生集合 
+	//我们考虑创建一个学生数组
 	vector<tuple<string, int, int>> vec_stu;
 	//make_tuple()可以用于创建一个tuple实例
 	//考虑使用for循环创建10个学生
@@ -52,5 +52,25 @@ int main()
 	}
 	cout << "===========================" << endl;
 	
+	//但是某些情况下 我们并不清楚tuple当中各个成员的信息
+	//当我们不知道变量类型的时候 是没办法定义变量的
+	//那我们如何定义某些变量来存储tuple各成员值呢?
+	//我们可以考虑使用两个辅助模板 得到成员类型或成员数量
+	//decltype()可以推测表达式的数据类型
+	typedef decltype(Student) stu_type;
+	//那么我们这里的stu_type是一个和Student一样的tuple
+	int count = tuple_size<stu_type>::value;
+	cout << "Count:" << count << endl;
+	//通过tuple_size<>::value模板获取当前tuple有多少个成员
+	//查看输出 上面的count输出为3 那么代表Student有3个成员
+	//那么我们可以考虑定义3个变量 存储各个成员值
+	//对于更多的成员数量 可以用循环实现这个存储过程
+	tuple_element<0, stu_type>::type v1 = get<0>(Student);
+	tuple_element<1, stu_type>::type v2 = get<1>(Student);
+	tuple_element<2, stu_type>::type v3 = get<2>(Student);
+	//通过tuple_element<>::type获取某个成员的属性
+	//这样就成功定义了3个变量v1 v2 v3 里面对应Student各个成员
+	//目前为止 并不用很清楚Student各成员的类型到底是什么
+	cout << v1 << " " << v2 << " " << v3 << endl;
 	return 0;
 }
