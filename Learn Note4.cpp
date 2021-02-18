@@ -61,7 +61,7 @@ int main()
 	//那么我们这里的stu_type是一个和Student一样的tuple
 	int count = tuple_size<stu_type>::value;
 	cout << "Count:" << count << endl;
-	//通过tuple_size<>::value模板获取当前tuple有多少个成员
+	//通过tuple_size<>::value获取当前tuple有多少个成员
 	//查看输出 上面的count输出为3 那么代表Student有3个成员
 	//那么我们可以考虑定义3个变量 存储各个成员值
 	//对于更多的成员数量 可以用循环实现这个存储过程
