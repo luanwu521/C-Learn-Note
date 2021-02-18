@@ -72,5 +72,6 @@ int main()
 	//这样就成功定义了3个变量v1 v2 v3 里面对应Student各个成员
 	//目前为止 并不用很清楚Student各成员的类型到底是什么
 	cout << v1 << " " << v2 << " " << v3 << endl;
+
 	return 0;
 }
