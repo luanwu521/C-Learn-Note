@@ -7,7 +7,7 @@ int main() {
 
 	/*
 		原C库中的随机数函数rand()局限性比较大
-		我们考虑用支持更多功能的C++标准库来生成随机数
+		我们考虑用支持更多功能的C++随机数库来生成随机数
 		使用这个随机数标准库 需要确定随机数引擎和分布类型模板
 		随机数引擎主要用于生成原始随机数 一般不直接使用原始随机数
 		分布类型模板将利用随机数引擎生成指定规则的随机数
@@ -47,9 +47,11 @@ int main() {
 
 	uniform_real_distribution<double> u2(0, 1);
 	//分布类型uniform_real_distribution：连续均匀分布
+	//范围从0到1
 	e.seed(time(nullptr));
 	for (int i = 0; i < 5; i++) {
 		cout << u2(e) << endl;
 	}
+
 	return 0;
 }
