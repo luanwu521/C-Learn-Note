@@ -14,9 +14,9 @@ Learn Note目录:
 
 2.泛型算法 Lambda相关
 
-3.更改控制台文字属性
+3.更改windows控制台文字属性
 
-4.数据结构tuple相关
+4.tuple相关
 
 5.重载运算符相关
 
