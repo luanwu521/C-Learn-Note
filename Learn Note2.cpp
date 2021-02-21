@@ -6,7 +6,7 @@
 using namespace std;
 
 class Student {//定义一个学生类 提供两个基本的构造函数
-public://为了方便调试 就都定义成public的了
+public:
 	
 	string name = "";//姓名
 	string id = "";//学号

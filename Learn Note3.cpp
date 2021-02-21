@@ -35,7 +35,7 @@ int main()
 	//传入STD_OUTPUT_HANDLE代表获取一个标准输出设备的句柄
 	//SetConsoleTextAttribute()的第二个参数是和文字属性相关的
 	//在这第二个参数可以设置文字的背景色 文字颜色等属性
-	//想同时多个属性展示用|链接起来即可
+	//想同时设置多个属性用|链接起来即可
 
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Color::red );
 	cout << "这是红色 red" << endl;
