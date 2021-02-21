@@ -45,7 +45,7 @@ int main() {
 	//我们说以上格式化输出是对流而言的 不仅是标准输出流 文件流也是一种流
 	//那么这些格式化输出对文件流也同样适用
 	fstream fp;
-	fp.open("test1.txt", fstream::out);//打开一个文件 模式为输出
+	fp.open("Other file/test1.txt", fstream::out);//打开一个文件 模式为输出
 	fp << showbase << uppercase << hex << n << nouppercase << noshowbase << endl;
 	fp << setfill('*') << setw(10) << right << m1 << setfill(' ') << endl;
 	fp << setfill('*') << setw(10) << left << m2 << setfill(' ') << endl;
