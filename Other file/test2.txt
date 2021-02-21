@@ -1,0 +1,7 @@
+book1 28
+book2 19
+book3 12
+book4 33
+new_book1 10
+new_book2 5
+new_book3 27
