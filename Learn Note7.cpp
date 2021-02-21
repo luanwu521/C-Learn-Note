@@ -51,5 +51,16 @@ int main() {
 	fp << setfill('*') << setw(10) << left << m2 << setfill(' ') << endl;
 	fp.close();//关闭文件
 
+	//在某些情况下 需要读取流中的空白字符
+	//而默认的 流是忽略空白字符的
+	char ch;
+	cin >> noskipws;//设置可以读取空白字符
+	while (cin >> ch) {
+		//windows下可以使用ctrl+z表示到达文件末尾(EOF)
+		//这样便可置输入流状态为false 从而退出while循环
+		cout << ch;
+	}
+	cin >> skipws;//恢复到默认忽略空白字符的状态
+
 	return 0;
 }
