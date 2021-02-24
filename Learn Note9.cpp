@@ -33,6 +33,7 @@ int main() {
 		//既然读取了一行 那么就可以记录读取的字数了
 		cnt += line.size() + 1;//最后还有一个不可见的换行符 也要算上
 		auto mark = fp.tellg();//记录读取一行之后现在的位置
+		//seekp()用于重新定位输出流中的标记位置
 		fp.seekp(0, fstream::end);
 		//将写标记定位到距离文件尾长度为0的位置 也就是文件尾
 		fp << cnt;//写入数据
@@ -41,8 +42,6 @@ int main() {
 		}
 		fp.seekg(mark);//写入数据完后恢复之前读的位置继续读
 	}
-	fp.seekg(0, fstream::end);
-	fp << "\n";//实现所有操作后 在文件最后换行
-
+	
 	return 0;
 }
