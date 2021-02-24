@@ -11,9 +11,9 @@ protected://只允许当前类和子类访问
 	unsigned attack_value = 0;//攻击力
 	unsigned defend_value = 0;//防御力
 public://没有限制 都可以访问
-	living_things() = default;//采用默认的构造函数
+	living_things() = default;//default表示采用默认的构造函数
 	living_things(string name_in) : name(name_in) {};
-	virtual ~living_things() = default;//采用默认的析构函数
+	virtual ~living_things() = default;//default表示采用默认的析构函数
 	//一般可继承类的析构函数都定义成虚函数
 
 	//设置活体的年龄
