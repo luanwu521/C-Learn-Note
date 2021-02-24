@@ -25,3 +25,5 @@ Learn Note目录(括号中表示当前程序关联的其他文件 位于Other fi
 7.格式化输入输出(test1.txt)
 
 8.文件流 字符串流(test2.txt)
+
+9.流的随机访问(text3.txt)
