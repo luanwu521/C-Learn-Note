@@ -58,6 +58,7 @@ public:
 
 int main() 
 {
+
 	living_things mode1 = living_things("mode1");
 	people mode2 = people("mode2", 10);
 	people mode3 = people("mode3", 20);
