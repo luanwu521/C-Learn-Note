@@ -1,12 +1,8 @@
-最近在看CSAPP 也在学习win32api
+最近重温了C Prime Plus和C++ Prime
 
-还重温了C Prime Plus和C++ Prime
+也是复习C/C++ 加深一些理解
 
-当时复习C/C++ 加深一些理解
-
-这里就是一些学习过程的笔记
-
-包括但不限于一些常用的win api、C++的特性等
+这里是一些学习c++过程的笔记
 
 Learn Note目录(括号中表示当前程序关联的其他文件 位于Other file文件夹下):
 
@@ -14,7 +10,7 @@ Learn Note目录(括号中表示当前程序关联的其他文件 位于Other fi
 
 2.泛型算法 Lambda
 
-3.更改windows控制台文字属性
+3.调用win32api:更改windows控制台文字属性
 
 4.tuple
 
