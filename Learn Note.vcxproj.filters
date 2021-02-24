@@ -45,5 +45,8 @@
     <ClCompile Include="Learn Note10.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Learn Note11.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
