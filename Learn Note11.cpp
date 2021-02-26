@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <memory>
 using namespace std;
 
 class living_things {//活体类
@@ -72,17 +73,23 @@ int main() {
 	//想要知道count的值 只能通过类提供的public接口get_count()获取
 	//静态成员的访问只需要使用 类名+域运算符(::)+成员名
 
+	cout << "=====================" << endl;
+
 	living_things& mode4 = mode1;
 	living_things* ptr1 = &mode2;
 	cout << "Name:" << mode4.get_name() << " lv:" << mode4.calculate_lv() << endl;
 	cout << "Name:" << ptr1->get_name() << " lv:" << ptr1->calculate_lv() << endl;
+	//这里我们使用了living_things类型的引用和指针来管理pet类型的对象
 	//通常情况下 指针或引用的类型必须与所管理对象相同
 	//但是在继承类的情况下 并不一定要求两者类型相同
 	//我们可以用父类类型的指针或引用管理子类对象
 	//但这样仅仅可以管理子类对象中从父类继承的那一部分
 	//子类独有父类没有的属性是不能通过父类类型的指针或引用进行管理
-	
+	shared_ptr<living_things> ptr2 = make_shared<living_things>(mode3);
+	cout << "Name:" << ptr2->get_name() << " lv:" << ptr2->calculate_lv() << endl;
+	//也可以使用智能指针管理对象 同样遵循上述的特性
 
+	cout << "=====================" << endl;
 
 	return 0;
 }
