@@ -72,5 +72,17 @@ int main() {
 	//想要知道count的值 只能通过类提供的public接口get_count()获取
 	//静态成员的访问只需要使用 类名+域运算符(::)+成员名
 
+	living_things& mode4 = mode1;
+	living_things* ptr1 = &mode2;
+	cout << "Name:" << mode4.get_name() << " lv:" << mode4.calculate_lv() << endl;
+	cout << "Name:" << ptr1->get_name() << " lv:" << ptr1->calculate_lv() << endl;
+	//通常情况下 指针或引用的类型必须与所管理对象相同
+	//但是在继承类的情况下 并不一定要求两者类型相同
+	//我们可以用父类类型的指针或引用管理子类对象
+	//但这样仅仅可以管理子类对象中从父类继承的那一部分
+	//子类独有父类没有的属性是不能通过父类类型的指针或引用进行管理
+	
+
+
 	return 0;
 }
