@@ -82,6 +82,24 @@ public:
 	
 };
 
+class G : public E {//G以public继承E
+public:
+	int f1() {
+		return a1;
+	}
+	int f2() {
+		return a2;
+	}
+	int f3() {
+		//return a3;
+		//无法访问a3 因为a3在A中是private的
+		//E可以访问a3是因为E是A的友元
+		//但G不是A的友元 所以不能访问A的private成员
+		//这也说明 友元是不可继承的 
+		//尽管G继承自E E是A的友元不代表G(继承自E)就也是A的友元
+	}
+};
+
 int main()
 {
 
