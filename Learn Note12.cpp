@@ -86,6 +86,7 @@ class G : public E {//G以public继承E
 public:
 	int f1() {
 		return a1;
+
 	}
 	int f2() {
 		return a2;
@@ -97,11 +98,11 @@ public:
 		//但G不是A的友元 所以不能访问A的private成员
 		//这也说明 友元是不可继承的 
 		//尽管G继承自E E是A的友元不代表G(继承自E)就也是A的友元
+		
 	}
 };
 
 int main()
 {
-
 	return 0;
 }

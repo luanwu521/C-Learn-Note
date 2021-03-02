@@ -75,6 +75,7 @@ int main() {
 
 	cout << "=====================" << endl;
 
+	//C++ 多态意味着调用成员函数时 会根据调用函数的对象的类型来执行不同的函数
 	living_things& mode4 = mode1;
 	living_things* ptr1 = &mode2;
 	cout << "Name:" << mode4.get_name() << " lv:" << mode4.calculate_lv() << endl;
