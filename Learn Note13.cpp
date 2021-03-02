@@ -26,7 +26,7 @@ public:
 	T& operator[](size_type i);
 	
 	//在模板类内实现成员函数
-	unsigned len() {
+	size_type len() {
 		return data->size();
 	}
 
