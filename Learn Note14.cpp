@@ -32,8 +32,8 @@ public:
 //typedef是不支持模板参数T的 typedef A<T> A2; 这样是不允许的
 //但是可以typedef A<int> A3; 当T确定后(这里是int)是可以的 因为这已经是实例化模板了
 //要想使模板拥有别名且可以使用模板参数T 可以使用using
-template<typename T> using tuple_three_T = tuple<T, T, T>;
-template<typename T> using tuple_T_T_int = tuple<T, T, int>;//第三个类型只能是int
+template <typename T> using tuple_three_T = tuple<T, T, T>;
+template <typename T> using tuple_T_T_int = tuple<T, T, int>;//第三个类型只能是int
 
 int main() {
 	tuple_three_T<int> tup1;//这里的tup1类型是tuple<int, int, int>
