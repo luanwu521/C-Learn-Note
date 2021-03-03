@@ -10,7 +10,7 @@ Learn Note目录(括号中表示当前程序关联的其他文件 位于Other fi
 
 2.泛型算法、Lambda
 
-3.调用win32api:更改windows控制台文字属性
+3.调用win32api
 
 4.tuple
 
