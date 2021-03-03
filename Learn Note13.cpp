@@ -17,6 +17,7 @@ public:
 	typedef typename vector<T>::size_type size_type;
 	//typename声明后面跟着的东西是一个类型 
 	//因为::可能会导致编译器认为后面跟着的东西是一个类的成员
+	static int count;//声明一个模板类的静态成员变量
 
 	test2();
 	test2(initializer_list<T> li);
@@ -36,13 +37,15 @@ private:
 
 //在模板类外实现成员函数函数 需要通过模板类名来确定成员函数
 template <typename T> test2<T>::test2(): data(make_shared<vector<T>>()){}
-template <typename T> test2<T>::test2(initializer_list<T> li): data(make_shared<vector<T>>(li)){}
+template <typename T> test2<T>::test2(initializer_list<T> li) : data(make_shared<vector<T>>(li)){}
 template <typename T> void test2<T>::push_back(const T& t){
 	data->push_back(t);
 }
 template <typename T> T& test2<T>::operator[](size_type i) {
 	return (i < data->size() ? (*data)[i] : (*data)[0]);
 }
+
+template <typename T> int test2<T>::count = 0;//定义并初始化静态成员变量
 
 int main() {
 
@@ -52,13 +55,13 @@ int main() {
 	cout << test1('S', 'Q') << endl;//char
 	
 	//因为构造函数接受initializer_list<T> 所以可以用{}来初始化成员
-	test2<int> A = { 1, 2, 3, 4, 5 };
+	test2<int> A = { 1, 2, 3, 4, 5 };//用int实例化模板
 	for (unsigned i = 0; i < A.len(); i++) {
 		cout << A[i] << " " << ends;
 	}
 	cout << endl;
-
-	test2<string> B = { "ovo", "qwq", "ouo" };
+	
+	test2<string> B = { "ovo", "qwq", "ouo" };//用string实例化模板
 	B.push_back("qaq");
 	for (unsigned i = 0; i < B.len(); i++) {
 		cout << B[i] << " " << ends;
