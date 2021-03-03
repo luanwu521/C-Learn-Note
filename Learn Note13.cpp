@@ -25,7 +25,8 @@ public:
 
 	void push_back(const T& t);
 	T& operator[](size_type i);
-	
+	static int get_count() {return count;}//定义静态成员函数
+
 	//在模板类内实现成员函数
 	size_type len() {
 		return data->size();
