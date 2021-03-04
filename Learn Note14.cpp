@@ -20,14 +20,16 @@ public:
 	
 };
 
-template <typename T> class C {
+template <typename T = int> class C {//为T定义一个默认实参
 public:
-	
+	template <typename X> C(ostream& os, const X& x) { os << x << endl; };
+	//模板类中可以定义模板函数 将构造函数定义成模板函数
 };
 
 class D {
 public:
-	
+	template <typename X> D(ostream& os, const X& x) { os << x << endl; };
+	//普通类中也可以定义模板函数 将构造函数定义成模板函数
 };
 
 //typedef不支持模板参数T的 typedef A<T> A2; 这样是不允许的
@@ -40,6 +42,12 @@ int main() {
 
 	tuple_three_T<int> tup1;//这里的tup1类型是tuple<int, int, int>
 	tuple_T_T_int<string> tup2;//这里的tup2类型是tuple<string, string, int>
-
+	
+	string str = "Hello World";
+	//不指定模板实参则使用默认模板实参
+	C<> c1(cout, str);
+	C<> c2(cout, 233);
+	D d(cout, str);
+	
 	return 0;
 }
