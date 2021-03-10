@@ -30,7 +30,7 @@ public:
 
 int main() {
 
-	People demo1("Jiang Yilong", 19);
+	People demo1("Jiang", 19);
 	People* ptr_1 = &demo1;
 	People demo2("Bai", 20);
 	People* ptr_2 = &demo2;
