@@ -30,6 +30,8 @@ private:
 	unsigned hunger_value = 0;//饥饿值
 	//每个静态成员变量只存在一个副本 无论实例化了多少个类的对象 静态成员变量都被这些对象共享
 	static unsigned count;//声明一个静态成员变量:宠物数量
+	static const unsigned test = 233;//常量静态成员变量可以在类内直接初始化
+
 public:
 
 	//利用父类的构造函数来初始化某些子类从父类继承的成员
@@ -49,6 +51,7 @@ public:
 	
 	~pet() {
 		count--;//销毁一个宠物对象就递减宠物数量
+		
 	}
 
 	//定义一个静态成员函数 这种函数不能访问this指针
@@ -58,7 +61,8 @@ public:
 	}
 };
 
-unsigned pet::count = 0;//静态成员变量的初始化不能放在类的定义中
+unsigned pet::count = 0;
+//普通静态成员变量的初始化不能放在类内
 
 int main() {
 
