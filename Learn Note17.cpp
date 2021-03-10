@@ -3,14 +3,14 @@ using namespace std;
 
 //定义不限定作用域的枚举类型 且整形类型为无符号整数
 enum fruit : unsigned {
-	APPLE = 0u,
+	APPLE = 0u,//u是后缀 表无符号整数
 	BANANA = 1u,
 	ORANGE = 2u
 };
 
 //定义限定作用域的枚举类型
 enum class animal : unsigned {//整形类型为无符号整数
-	PIG = 0u,//u是后缀 表无符号整数
+	PIG = 0u,
 	DOG = 1u,
 	MONKEY = 2u
 };
