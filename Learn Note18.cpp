@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-template <int N> class Fib{
+template <long N> class Fib{
 public:
 	enum : long{ sum = Fib<N - 1>::sum + Fib<N - 2>::sum };//Ä£°åµÝ¹éÊ½
 };
