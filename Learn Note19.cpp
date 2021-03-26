@@ -239,8 +239,8 @@ int main() {
 	cout << endl;
 
 	cout << "µü´úÆ÷±éÀúls2:" << endl;
-	List_ovo<int>::iterator it2;
-	for (it2 = ls2.get_begin_iter(); !it2.equal(ls2.get_end_iter()); it2++) {
+	auto it2 = ls2.get_begin_iter();
+	for (; !it2.equal(ls2.get_end_iter()); it2++) {
 		cout << *it2 << " ";
 	}
 	cout << endl;
