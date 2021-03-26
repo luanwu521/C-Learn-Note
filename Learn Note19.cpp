@@ -30,11 +30,14 @@ public:
 
 	List_ovo<T>() = default;
 	List_ovo<T>(const List_ovo<T>& t) {//¿½±´¹¹Ôìº¯Êý
-		List_Node<T>* cur = t.begin;
-		while (size != t.size) {
-			add_node(cur->data);
-			cur = cur->next;
+		if (t.size != 0) {
+			List_Node<T>* cur = t.begin;
+			while (size != t.size) {
+				add_node(cur->data);
+				cur = cur->next;
+			}
 		}
+		
 	};
 	~List_ovo<T>() = default;
 
@@ -53,6 +56,7 @@ public:
 	}
 
 	T& operator[] (int n) {
+
 		List_Node<T>* p = begin ? begin : 0;
 		if (n < size && n >= 0) {
 			int cur = 0;
@@ -212,6 +216,7 @@ int main() {
 	}
 
 	List_ovo<int> ls2(ls);
+
 	cout << "size:" << ls.get_size() << endl;
 	for (int i = 0; i < ls.get_size(); i++) {
 		cout << ls[i] << " ";
