@@ -171,7 +171,7 @@ template <typename T>
 void List_ovo<T>::insert_node(const T& value_in, int pos) {
 	
 	//根据所给位置判断从头向后遍历还是从尾向前遍历
-	List_Node<T>* cur = ((pos <= (size / 2 - 1) && pos < size) && pos >= 0 ? begin : end->back);
+	List_Node<T>* cur = (pos <= (size / 2 - 1) && pos < size && pos >= 0 ? begin : end->back);
 	List_Node<T>* add_node = new List_Node<T>(value_in);
 	if (pos == 0) {
 		
@@ -185,14 +185,10 @@ void List_ovo<T>::insert_node(const T& value_in, int pos) {
 	else {
 
 		if (cur == begin) {
-			for (int i = 0; i != pos - 1; i++) {
-				cur = cur->next;
-			}
+			for (int i = 0; i != pos - 1; i++) cur = cur->next;
 		}
 		else {
-			for (int i = size - 1; i != pos - 1; i--) {
-				cur = cur->back;
-			}
+			for (int i = size - 1; i != pos - 1; i--) cur = cur->back;
 		}
 
 		List_Node<T>* cur_next = cur->next;
@@ -217,7 +213,7 @@ int main() {
 
 	List_ovo<int> ls2(ls);
 
-	cout << "size:" << ls.get_size() << endl;
+	cout << "ls size:" << ls.get_size() << endl;
 	for (int i = 0; i < ls.get_size(); i++) {
 		cout << ls[i] << " ";
 	}
@@ -227,7 +223,7 @@ int main() {
 	ls.remove_node(600);
 	ls.remove_node(900);
 
-	cout << "size:" << ls.get_size() << endl;
+	cout << "ls size:" << ls.get_size() << endl;
 	for (int i = 0; i < ls.get_size(); i++) {
 		cout << ls[i] << " ";
 	}
@@ -239,12 +235,6 @@ int main() {
 	List_ovo<int>::iterator it;
 	for (it = ls.get_begin_iter(); !it.equal(ls.get_end_iter()); it++) {
 		cout << *it << " ";
-	}
-	cout << endl;
-
-	cout << "size:" << ls2.get_size() << endl;
-	for (int i = 0; i < ls2.get_size(); i++) {
-		cout << ls2[i] << " ";
 	}
 	cout << endl;
 
