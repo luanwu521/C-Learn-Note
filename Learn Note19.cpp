@@ -1,6 +1,9 @@
 #include <iostream>
 using namespace std;
 
+#ifndef LIST_OVO
+#define LIST_OVO 2333
+
 //链表节点
 template <typename T = int>
 class List_Node {
@@ -20,6 +23,11 @@ public:
 	}
 };
 
+//迭代器类型
+enum iterator_type : unsigned {
+	od = 0u,//顺序
+	rd = 1u//逆序
+};
 
 //双向循环链表
 template <typename T = int>
@@ -29,23 +37,14 @@ public:
 	typedef List_iterator iterator;
 
 	List_ovo<T>() = default;
-	List_ovo<T>(const List_ovo<T>& t) {//拷贝构造函数
-		if (t.size != 0) {
-			List_Node<T>* cur = t.begin;
-			while (size != t.size) {
-				add_node(cur->data);
-				cur = cur->next;
-			}
-		}
-		
-	};
+	List_ovo<T>(const List_ovo<T>& t) {copy(t);};//拷贝构造函数
+	List_ovo<T>& operator=(const List_ovo<T>& t) {copy(t); return *this;}//赋值运算符
 	~List_ovo<T>() = default;
 
 	void add_node(const T&);//在链表最后端连接一个新节点
 	bool remove_node(const T&);//删除指定值的节点
 	void insert_node(const T&, const int);//在指定位置插入一个节点
 	int search_node(const T&);//搜寻指定值的节点的所在位置 返回下标
-
 	int get_size() const { return size; }//获取链表中当前节点个数
 
 	iterator get_begin_iter() {//获取头迭代器
@@ -53,6 +52,9 @@ public:
 	}
 	iterator get_end_iter() {//获取尾后迭代器
 		return List_ovo<T>::iterator(end);
+	}
+	iterator get_res_begin_iter() {//获取逆序头迭代器
+		return List_ovo<T>::iterator(end->back, iterator_type::rd);
 	}
 
 	T& operator[] (int n) {
@@ -75,6 +77,15 @@ private:
 	List_Node<T>* begin = NULL;//头节点
 	List_Node<T>* end = new List_Node<T>(-1);//尾后节点
 	
+	void copy(const List_ovo<T>& t) {
+		if (t.size != 0) {
+			List_Node<T>* cur = t.begin;
+			while (size != t.size) {
+				add_node(cur->data);
+				cur = cur->next;
+			}
+		}
+	}
 };
 
 //链表迭代器
@@ -82,12 +93,12 @@ template <typename T>
 class List_ovo<T>::List_iterator {
 public:
 	List_ovo<T>::List_iterator() = default;
-	List_ovo<T>::List_iterator(List_Node<T>* p) : cur(p) {};
+	List_ovo<T>::List_iterator(List_Node<T>* p, iterator_type type_in = iterator_type::od) : cur(p), type(type_in) {};
 
 	T& operator*() { return cur->data; }
 	
 	List_ovo<T>::List_iterator& operator++() {//前置递增
-		this->cur = this->cur->next;
+		this->cur = (type ? this->cur->back : this->cur->next);
 		return *this;
 	}
 	List_ovo<T>::List_iterator operator++(int) {//后置递增
@@ -100,6 +111,7 @@ public:
 
 private:
 	List_Node<T>* cur = NULL;
+	iterator_type type = iterator_type::od;
 };
 
 //=================================================================
@@ -201,6 +213,7 @@ void List_ovo<T>::insert_node(const T& value_in, int pos) {
 	
 }
 
+#endif
 
 int main() {
 	
@@ -245,5 +258,25 @@ int main() {
 	}
 	cout << endl;
 
+	cout << "迭代器逆序遍历ls2:" << endl;
+	auto it3 = ls2.get_res_begin_iter();
+	for (; !it3.equal(ls2.get_end_iter()); it3++) {
+		cout << *it3 << " ";
+	}
+	cout << endl;
+
+	List_ovo<int> ls3 = ls2;
+	cout << "迭代器遍历ls3:" << endl;
+	auto it4 = ls3.get_begin_iter();
+	for (; !it4.equal(ls3.get_end_iter()); it4++) {
+		cout << *it4 << " ";
+	}
+	cout << endl;
+
+	List_ovo<int> ls4;
+	for (long long g = 0; g < 1000000; g++) {
+		ls4.add_node(g);
+	}
+	cout << "ls4 size:" << ls4.get_size() << endl;
 	return 0;
 }
