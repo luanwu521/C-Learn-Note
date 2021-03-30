@@ -1,8 +1,9 @@
 #include <iostream>
 using namespace std;
 
-#ifndef LIST_OVO
-#define LIST_OVO 2333
+#ifndef LISTOVO
+#define LISTOVO
+#define NULL 0
 
 //链表节点
 template <typename T = int>
@@ -39,15 +40,15 @@ public:
 	
 	List_ovo<T>() = default;
 	List_ovo<T>(initializer_list<T> list_) { for (auto n : list_) { add_node(n); } }//支持列表初始化
-	List_ovo<T>(const List_ovo<T>& t) {copy(t);};//拷贝构造函数
-	~List_ovo<T>() = default;
-	List_ovo<T>& operator=(const List_ovo<T>& t) {copy(t); return *this;}//重载赋值运算符
+	List_ovo<T>(const List_ovo<T>& rhs) {copy(rhs);};//拷贝构造函数
+	~List_ovo<T>() {for (long i = 0; i < size; i++) this->remove_node((*this)[0]);}//析构函数
+	List_ovo<T>& operator=(const List_ovo<T>& rhs) {  copy(rhs); return *this;}//重载赋值运算符
 
-	void add_node(const T&);//在链表最后端连接一个新节点
+	void add_node(const T);//在链表最后端连接一个新节点
 	bool remove_node(const T&);//删除指定值的节点
-	void insert_node(const T&, const int);//在指定位置插入一个节点
-	int search_node(const T&);//搜寻指定值的节点的所在位置 返回下标
-	int get_size() const { return size; }//获取链表中当前节点个数
+	void insert_node(const T, const long);//在指定位置插入一个节点
+	long search_node(const T&);//搜寻指定值的节点的所在位置 返回下标
+	long get_size() const { return size; }//获取链表中当前节点个数
 
 	iterator get_begin_iter() {return List_ovo<T>::iterator(begin_node);}
 	iterator get_end_iter() {return List_ovo<T>::iterator(end_node);}
@@ -66,6 +67,7 @@ public:
 			}
 		}
 		if(p)return p->data;
+		return (*(T*)0);
 		
 	}
 
@@ -74,27 +76,66 @@ public:
 	iterator end() const { return List_ovo<T>::iterator(end_node); }
 
 private:
-	int size = 0;//链表中节点个数
+	long size = 0;//链表中节点个数
 	List_Node<T>* begin_node = NULL;//头节点
 	List_Node<T>* end_node = new List_Node<T>(-1);//尾后节点
 	
 	void copy(const List_ovo<T>& t) {
-		if (t.size != 0) {
-			List_Node<T>* cur = t.begin_node;
-			while (size != t.size) {
-				add_node(cur->data);
-				cur = cur->next;
+		//考虑自赋值的情况 将数据放到一个临时链表
+		
+		if (size == 0) {
+			if (t.size != 0) {
+				List_Node<T>* cur = t.begin_node;
+				while (size != t.size) {
+					add_node(cur->data);
+					cur = cur->next;
+				}
 			}
 		}
+		else {
+			List_Node<T>* head = new List_Node<T>(t.begin_node->data);
+			List_Node<T>* cur_h = head;//临时链表
+			List_Node<T>* cur = t.begin_node->next;
+			while(cur != t.end_node) {
+				List_Node<T>* add_node = new List_Node<T>(cur->data);
+				cur_h->next = add_node;
+				cur_h = cur_h->next;
+				cur = cur->next;
+			}
+			
+			//删除原数据
+			int k = size;
+			for (long i = 0; i < k; i++) {
+				this->remove_node((*this)[0]);
+			} 
+			
+			//将临时链表中的节点加入现在链表
+			cur_h = head;
+			while (cur_h && cur_h->next) {
+				add_node(cur_h->data);
+				cur_h = cur_h->next;
+			}
+
+			//回收临时链表的内存
+			cur_h = head;
+			while (cur_h && cur_h->next) {
+				List_Node<T>* p = cur_h;
+				cur_h = cur_h->next;
+				delete p;
+			}
+
+		}
+		
 	}
+
 };
 
 //链表迭代器
 template <typename T>
 class List_ovo<T>::List_iterator {
 public:
-	List_ovo<T>::List_iterator() = default;
-	List_ovo<T>::List_iterator(List_Node<T>* p, iterator_type type_in = iterator_type::od) : cur(p), type(type_in) {};
+	List_iterator() = default;
+	List_iterator(List_Node<T>* p, iterator_type type_in = iterator_type::od) : cur(p), type(type_in) {};
 
 	T& operator*() { return cur->data; }
 	
@@ -120,7 +161,8 @@ private:
 //=================================================================
 
 template <typename T>
-void List_ovo<T>::add_node(const T& value_in) {
+void List_ovo<T>::add_node(const T value_in) {
+	//分配内存
 	List_Node<T>* add_node = new List_Node<T>(value_in);
 	if (size == 0) {
 		begin_node = add_node;
@@ -144,8 +186,8 @@ void List_ovo<T>::add_node(const T& value_in) {
 }
 
 template <typename T>
-int List_ovo<T>::search_node(const T& value_in) {
-	int i = 0;
+long List_ovo<T>::search_node(const T& value_in) {
+	long i = 0;
 	for (; i < this->size; i++) {
 		if ((*this)[i] == value_in) break;
 	}
@@ -183,7 +225,7 @@ bool List_ovo<T>::remove_node(const T& value_in) {
 }
 
 template <typename T>
-void List_ovo<T>::insert_node(const T& value_in, int pos) {
+void List_ovo<T>::insert_node(const T value_in, const long pos) {
 	
 	//根据所给位置判断从头向后遍历还是从尾向前遍历
 	List_Node<T>* cur = (pos <= (size / 2 - 1) && pos < size && pos >= 0 ? begin_node : end_node->back);
@@ -200,10 +242,10 @@ void List_ovo<T>::insert_node(const T& value_in, int pos) {
 	else {
 
 		if (cur == begin_node) {
-			for (int i = 0; i != pos - 1; i++) cur = cur->next;
+			for (long i = 0; i != pos - 1; i++) cur = cur->next;
 		}
 		else {
-			for (int i = size - 1; i != pos - 1; i--) cur = cur->back;
+			for (long i = size - 1; i != pos - 1; i--) cur = cur->back;
 		}
 
 		List_Node<T>* cur_next = cur->next;
@@ -216,6 +258,8 @@ void List_ovo<T>::insert_node(const T& value_in, int pos) {
 	
 }
 
+template <typename U>
+using List = List_ovo<U>;
 
 #endif
 
@@ -277,17 +321,33 @@ int main() {
 	}
 	cout << endl;
 
+
 	cout << "范围for遍历ls3:" << endl;
 	for (auto v : ls3) {
 		cout << v << " ";
 	}
 	cout << endl;
 
-	List_ovo<long long> ls4;
-	for (long long g = 0; g < 1000000; g++) {
+
+	List_ovo<long> ls4;
+	for (long g = 0; g < 1000000; g++) {//数据量足够大时
 		ls4.add_node(g);
 	}
+	clock_t start, finish;
+	long pos = 400000;//插入位置
+	start = clock();
+	ls4.insert_node(666, pos);
+	finish = clock();
+	cout << "time:" << finish - start << endl;//计算优化方案的插入时间
+	cout << "node:" << ls4[pos] << endl;
 	cout << "ls4 size:" << ls4.get_size() << endl;
 
+	List_ovo<int> ls5 = {213, 3435, 56856, 1242, 34534};
+	ls2 = ls5;
+	cout << "范围for遍历ls2:" << endl;
+	for (auto v : ls2) {
+		cout << v << " ";
+	}
+	cout << endl;
 	return 0;
 }
