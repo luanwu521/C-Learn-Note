@@ -3,7 +3,7 @@ using namespace std;
 
 #ifndef LISTOVO
 #define LISTOVO
-#define NULL 0
+
 
 //链表节点
 template <typename T = int>
@@ -12,9 +12,9 @@ public:
 	List_Node<T>() = default;
 	List_Node<T>(const T& t) : data(t) {};
 
-	List_Node<T>* next = NULL;
-	List_Node<T>* back = NULL;
-	T data = NULL;
+	List_Node<T>* next = 0;
+	List_Node<T>* back = 0;
+	T data = 0;
 
 	bool operator!=(const List_Node<T>& node) const {
 		return this->data != node.data || this->back != node.back || this->next != node.next;
@@ -77,7 +77,7 @@ public:
 
 private:
 	long size = 0;//链表中节点个数
-	List_Node<T>* begin_node = NULL;//头节点
+	List_Node<T>* begin_node = 0;//头节点
 	List_Node<T>* end_node = new List_Node<T>(-1);//尾后节点
 	
 	void copy(const List_ovo<T>& t) {
@@ -154,7 +154,7 @@ public:
 	bool equal(const List_ovo<T>::List_iterator& it) const {return this->cur == it.cur;}
 
 private:
-	List_Node<T>* cur = NULL;
+	List_Node<T>* cur = 0;
 	iterator_type type = iterator_type::od;
 };
 
@@ -200,9 +200,9 @@ bool List_ovo<T>::remove_node(const T& value_in) {
 	List_Node<T>* cur = begin_node;
 	bool ret_val = false;
 
-	List_Node<T>* del_back = NULL;
-	List_Node<T>* del = NULL;
-	List_Node<T>* del_next = NULL;
+	List_Node<T>* del_back = 0;
+	List_Node<T>* del = 0;
+	List_Node<T>* del_next = 0;
 
 	while (cur && cur->next) {
 		if (cur->data == value_in) {
