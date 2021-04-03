@@ -92,7 +92,7 @@ int main()
 	Book book1 = Book("C prime plus", 10);
 	Book book2 = Book("数学分析", 5);
 	Book book3 = Book("高等代数", 20);
-	Book book4 = Book("C++ prime", 15);
+	Book book4 = Book("C++ primer", 15);
 	Book book5;
 	
 	//重载运算符的测试

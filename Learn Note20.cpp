@@ -5,6 +5,16 @@ using namespace std;
 
 int f1(int x, int y) {return x + y;}
 
+template <typename T>
+typename enable_if<is_arithmetic<T>::value>::type test(T t) {
+	cout << "t is " << t << endl;//形参为整形和浮点型调用这个函数
+}
+
+template <typename T>
+typename enable_if<!is_arithmetic<T>::value>::type test(T& t) {
+	cout << "t type:" << typeid(t).name() << endl;//形参不为整形和浮点型调用这个函数
+}
+
 int main() {
 
 	/*
@@ -14,10 +24,10 @@ int main() {
 		转换后的类型通过::type获取
 	*/
 
-	
 	auto f2 = std::bind([](int x, int y) {return x + y; }, std::placeholders::_1, 100);
 	cout << "is_function:" << is_function<decltype(f1)>::value << endl;
 	cout << "is_function:" << is_function<decltype(f2)>::value << endl;
+	cout << "typeid(f2):" << typeid(f2).name() << endl;
 
 	int i = 10;
 	int* p = &i;
@@ -44,7 +54,19 @@ int main() {
 	cout << "conditional<B1(j1 > 0), int, long>::type:" << typeid(conditional<B1, int, long>::type).name() << endl;
 	cout << "conditional<B2(j2 > 0), int, long>::type:" << typeid(conditional<B2, int, long>::type).name() << endl;
 	
+	//获取可调用对象的返回值类型
+	using f_ptr = double(*) (int);//函数指针 传入一个int 返回double
+	using f_ref = long(&) (int);//函数引用 传入一个int 返回long
+	cout << typeid(result_of<f_ptr(int)>::type).name() << endl;
+	cout << typeid(result_of<f_ref(int)>::type).name() << endl;
+	//普通函数类型f1并不是一个可调用对象 需要转换
+	cout << typeid(result_of<decltype(f1)* (int, int)>::type).name() << endl;//转换成函数指针
+	cout << typeid(result_of<decltype(f1)& (int, int)>::type).name() << endl;//转换成函数引用
 
+	//enable_if<B, A> fun() 仅当B为true时函数fun()才有效 A为函数返回类型 函数fun()没有返回值可以省略A
+	test(20);
+	test(3.1415);
+	test("ovo");
 
 	return 0;
 }
