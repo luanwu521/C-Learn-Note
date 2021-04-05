@@ -49,3 +49,7 @@ Learn Note目录(括号中表示当前程序关联的其他文件 位于Other fi
 21.变参模板函数
 
 22.std::function、std::bind
+
+23.综合应用——Dll调用类
+
+24.综合应用——any类
