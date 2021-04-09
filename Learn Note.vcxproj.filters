@@ -87,5 +87,14 @@
     <ClCompile Include="Learn Note24.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Learn Note25.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Learn Note26.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Learn Note27.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

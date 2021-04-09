@@ -53,3 +53,7 @@ Learn Note目录(括号中表示当前程序关联的其他文件 位于Other fi
 23.综合应用——Dll调用类
 
 24.综合应用——any类
+
+25.调用win api:修改系统注册表
+
+26.std::chrono

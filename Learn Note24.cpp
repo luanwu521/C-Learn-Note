@@ -66,5 +66,8 @@ int main() {
 	cout << a2.cast<const char*>() << endl;
 	cout << a3.cast<double>() << endl;
 	
+	a3 = "qwq";
+	cout << a3.cast<const char*>() << endl;
+
 	return 0;
 }

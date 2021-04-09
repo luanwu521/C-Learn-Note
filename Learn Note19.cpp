@@ -214,7 +214,8 @@ bool List_ovo<T>::remove_node(const T& value_in) {
 			del_next->back = del_back;
 			if (del == begin_node) begin_node = del_next;
 
-			delete del;
+			del->data.~T();//显示调用析构函数
+			delete del;//回收内存
 			size--;
 			ret_val = true;
 			break;
