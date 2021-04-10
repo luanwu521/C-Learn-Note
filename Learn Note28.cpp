@@ -17,7 +17,7 @@ void find_s(int target, int begin = 0, int end = COUNT, int which = 0) {
 
 //计时函数 计算运行f消耗的时间
 template <class T, typename... Args>
-void js(function<T>& f, Args... args) {
+void js(function<T> f, Args... args) {
 	std::chrono::steady_clock::time_point time_start = std::chrono::steady_clock::now();
 	f(args...);
 	std::chrono::steady_clock::time_point time_end = std::chrono::steady_clock::now();
@@ -26,8 +26,7 @@ void js(function<T>& f, Args... args) {
 
 //封装多线程的任务函数 which表示区间序号
 void task(int target, int start, int end, int which) {
-	function<decltype(find_s)> f1(find_s);
-	js(f1, target, start, end, which);
+	js(function<decltype(find_s)>(find_s), target, start, end, which);
 }
 
 int main() {
