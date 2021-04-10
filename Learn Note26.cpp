@@ -3,7 +3,17 @@
 #include <chrono>
 #include <ctime>
 #include <iomanip>
+#include <functional>
 using namespace std;
+
+//计时函数 计算运行f消耗的时间
+template <class T, typename... Args>
+void js(function<T>& f, Args... args) {
+	std::chrono::steady_clock::time_point time_start = std::chrono::steady_clock::now();
+	f(args...);
+	std::chrono::steady_clock::time_point time_end = std::chrono::steady_clock::now();
+	cout << "Time(microseconds):" << std::chrono::duration_cast<chrono::microseconds>(time_end - time_start).count() << endl;
+}
 
 int main() {
 
@@ -57,7 +67,7 @@ int main() {
 	//high_resolution_clock 高精度时钟 但实际上是上述两者的别名
 	
 	//可以看见 上述for循环精度需到microseconds才算得耗时 更浅一级的精度milliseconds都无法计算
-	//由此可以利用chrono制作一个高精度的计时器
+	//由此可以利用chrono制作一个高精度的计时函数js()
 	
 	//我们可以将一个time_point结构转换成一个ctime中定义的结构time_t
 	//这样就可以利用标准库里的一些关于时间的函数进行处理了
