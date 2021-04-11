@@ -8,11 +8,11 @@ using namespace std;
 
 //函数计时器 计算运行f消耗的时间
 template <class T, typename... Args>
-void js(function<T>& f, Args... args) {
+long long js(function<T>& f, Args... args) {
 	std::chrono::steady_clock::time_point time_start = std::chrono::steady_clock::now();
 	f(args...);
 	std::chrono::steady_clock::time_point time_end = std::chrono::steady_clock::now();
-	cout << "Time(microseconds):" << std::chrono::duration_cast<chrono::microseconds>(time_end - time_start).count() << endl;
+	return std::chrono::duration_cast<chrono::microseconds>(time_end - time_start).count();
 }
 
 int main() {
