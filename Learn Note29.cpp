@@ -40,7 +40,7 @@ int main() {
 
 	cout << "add function_signed:" << typeid(function_traits<decltype(add)>::function_signed).name() << endl;
 
-	function_traits<decltype(add)>::std_function_type f(add);
+	function_traits<decltype(add)>::std_function_type f(add);//½«add°ó¶¨µ½std::function
 	cout << "add Run result:" << f(13, 17) << endl;
 
 	cout << "add std_function_type:" << typeid(function_traits<decltype(add)>::std_function_type).name() << endl;
