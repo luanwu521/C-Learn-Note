@@ -78,7 +78,7 @@ public:
 private:
 	long size = 0;//链表中节点个数
 	List_Node<T>* begin_node = 0;//头节点
-	List_Node<T>* end_node = new List_Node<T>(-1);//尾后节点
+	List_Node<T>* end_node = new List_Node<T>(*(T*)0);//尾后节点
 	
 	void copy(const List_ovo<T>& t) {
 		//考虑自赋值的情况 将数据放到一个临时链表
@@ -263,6 +263,7 @@ template <typename U>
 using List = List_ovo<U>;
 
 #endif
+
 
 int main() {
 	

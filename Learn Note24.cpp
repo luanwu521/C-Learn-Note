@@ -1,6 +1,7 @@
 #include <iostream>
 #include <type_traits>
 #include <memory>
+
 using namespace std;
 
 struct any {
@@ -10,7 +11,27 @@ struct any {
 	//any的构造函数接受一个任意类型的参数 那么就可以实现将任意类型值赋给any
 	//考虑到我们只关心原始数据类型 传入类型可能包含cv限定符 故采用decay去除
 	template<class U> 
-	any(U&& value_in) : v_ptr(new Storage<typename decay<U>::type>(forward<U>(value_in))) {}
+	any(U&& value_in) : v_ptr(new Storage<typename decay<U>::type>(forward<U>(value_in))){}
+	any(any& rhs) : v_ptr(rhs.v_ptr->get_pointer()){}
+	any(any&& rhs) noexcept : v_ptr(std::move(rhs.v_ptr)) {}
+
+	template<class U>
+	any& operator=(U&& value_in) {
+		BasePtr tmp(new Storage<typename decay<U>::type>(forward<U>(value_in)));
+		this->v_ptr = std::move(tmp);
+		return *this;
+	}
+
+	any& operator=(any& rhs) {
+		if (v_ptr != rhs.v_ptr) {
+			v_ptr = rhs.v_ptr->get_pointer();
+		}
+		return *this;
+	}
+
+	bool operator==(any& rhs) {
+		return this->v_ptr == rhs.v_ptr;
+	}
 
 	//取值函数 内部将完成指针转换 以便取出存储的信息
 	template<class U>
@@ -25,11 +46,11 @@ private:
 	//为防止内存泄漏 采用智能指针管理类指针
 	using BasePtr = unique_ptr<Base>;
 	BasePtr v_ptr;
-
+	
 	struct Base
 	{
 		virtual ~Base() {};
-		
+		virtual BasePtr get_pointer() = 0;
 	};
 
 	template<class T>
@@ -40,9 +61,14 @@ private:
 		template<class U>
 		Storage(U&& value_in) : value(forward<U>(value_in)){}
 		
+		BasePtr get_pointer() {
+			return BasePtr(new Storage<T>(value));
+		}
+
 	};
 
 };
+
 
 int main() {
 
@@ -57,7 +83,7 @@ int main() {
 		当需要使用具体值时 利用dynamic_cast<>() 将Base指针转换成Storage指针即可
 	*/
 	
-	any a1 = 10;
+	any a1 = 25;
 	any a2 = "ovo";
 	any a3 = 3.1415;
 
@@ -68,6 +94,28 @@ int main() {
 	
 	a3 = "qwq";
 	cout << a3.cast<const char*>() << endl;
+	any a4(a1);
+	cout << a4.cast<int>() << endl;
 
-	return 0;
+	cout << "=======================" << endl;
+
+	any t[] = {a1, a2, a3, a4};
+	cout << t[0].cast<int>() << endl;
+	cout << t[1].cast<const char*>() << endl;
+	cout << t[2].cast<const char*>() << endl;
+	cout << t[3].cast<int>() << endl;
+
+	cout << "=======================" << endl;
+
+	any* k = new any[4];
+	k[0] = a1;
+	k[1] = a2;
+	k[2] = a3;
+	k[3] = a4;
+	cout << k[0].cast<int>() << endl;
+	cout << k[1].cast<const char*>() << endl;
+	cout << k[2].cast<const char*>() << endl;
+	cout << k[3].cast<int>() << endl;
+
+	return 0; 
 }

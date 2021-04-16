@@ -10,7 +10,7 @@ struct function_traits<Ret(Args...)> {//只支持普通函数的特化版本
 
 	enum{arg_size = sizeof...(Args) };//参数个数
 	using function_signed = Ret(Args...);//函数签名
-	using retur_type = Ret;//返回值类型
+	using return_type = Ret;//返回值类型
 	using function_pointer = Ret(*)(Args...);//函数指针
 	using std_function_type = std::function<function_signed>;//std::function类型
 
@@ -38,6 +38,12 @@ double add(double x, double y) { return x + y; }
 
 int main() {
 
+	/*
+		function_traits是一种函数萃取机 类似于type_traits
+		可以利用function_traits结合decltype获取一些和函数相关的信息
+		优点在于我们可以不用充分了解函数的细节
+	*/
+
 	cout << "add function_signed:" << typeid(function_traits<decltype(add)>::function_signed).name() << endl;
 
 	function_traits<decltype(add)>::std_function_type f(add);//将add绑定到std::function
@@ -46,7 +52,7 @@ int main() {
 	cout << "add std_function_type:" << typeid(function_traits<decltype(add)>::std_function_type).name() << endl;
 	cout << "add arg_type<0>:" << typeid(function_traits<decltype(add)>::arg_type<0>).name() << endl;
 	cout << "add arg_type<1>:" << typeid(function_traits<decltype(add)>::arg_type<1>).name() << endl;
-	cout << "add return_type:" << typeid(function_traits<decltype(add)>::retur_type).name() << endl;
+	cout << "add return_type:" << typeid(function_traits<decltype(add)>::return_type).name() << endl;
 	cout << "add arg_size:" << function_traits<decltype(add)>::arg_size << endl;
 
 	std::function<void(string, int)> f2 = [](string str, int i) {};//lambda绑定到std::function
@@ -54,9 +60,9 @@ int main() {
 	cout << "f2 function_signed:" << typeid(function_traits<decltype(f2)>::function_signed).name() << endl;
 	cout << "f2 arg_type<0>:" << typeid(function_traits<decltype(f2)>::arg_type<0>).name() << endl;
 	cout << "f2 arg_type<1>:" << typeid(function_traits<decltype(f2)>::arg_type<1>).name() << endl;
-	cout << "f2 return_type:" << typeid(function_traits<decltype(f2)>::retur_type).name() << endl;
+	cout << "f2 return_type:" << typeid(function_traits<decltype(f2)>::return_type).name() << endl;
 	cout << "f2 arg_size:" << function_traits<decltype(f2)>::arg_size << endl;
 
-
+	
 	return 0;
 }
