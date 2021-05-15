@@ -42,7 +42,7 @@ Learn Note目录(括号中表示当前程序关联的其他文件 位于Other fi
 
 18.模板递归和普通递归的比较
 
-19.综合应用——双向循环链表
+19.综合应用——实现双向循环链表
 
 20.type_traits
 
@@ -50,18 +50,20 @@ Learn Note目录(括号中表示当前程序关联的其他文件 位于Other fi
 
 22.std::function、std::bind
 
-23.综合应用——Dll调用类
+23.综合应用——实现Dll调用类
 
-24.综合应用——any类
+24.综合应用——实现any类
 
 25.调用win api:修改系统注册表
 
 26.std::chrono
 
-27.综合应用——线性表:数组描述
+27.综合应用——实现线性表:数组描述
 
 28.综合应用——多线程优化查找
 
-29.综合应用——function_traits
+29.综合应用——实现function_traits
 
-30.综合应用——tuple_helper
+30.综合应用——实现tuple_helper
+
+31.综合应用——实现String
