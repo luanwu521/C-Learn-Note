@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 using namespace std;
 
@@ -56,17 +57,14 @@ public:
 		char* it2 = rhs.buffer;
 		for (size_t i = 0; i < rhs.len; i++) { *it++ = *it2++; }
 		*it = '\0';
-
 		return tm;
 	}
 	char& operator [](const size_t pos) {
 		if (pos >= 0 && pos < len && len > 0) return *(buffer + pos);
 		return *(buffer + len - 1);
 	}
-	void operator +=(const String& rhs) {
-		String temp = *this + rhs;
-		*this = temp;
-	}
+	void operator +=(const String& rhs) {*this = *this + rhs;}
+	void operator +=(const char* rhs) {*this += String(rhs);}
 	bool operator == (const String& rhs) const {
 		char* _x = buffer;
 		char* _y = rhs.buffer;
@@ -90,6 +88,7 @@ public:
 
 	const size_t size() const { return len; }
 	const char* c_str() const { return buffer; }
+	const char* getMyString() const { return buffer; }
 	void swap(String& rhs) noexcept {
 		std::swap(buffer, rhs.buffer);
 		std::swap(len, rhs.len);
@@ -99,7 +98,7 @@ public:
 		char* _y = buffer + len - 1;
 		for (size_t i = 0 ; i < len / 2; i++) {std::swap(*_x++, *_y--);}
 	}
-	bool empty() const { if (*(buffer + len) == '\0') return true; return false; }
+	bool empty() const { if (len == 0) return true; return false; }
 	String cut(size_t _x = 0, size_t _y = 0) {
 		if (_x > _y) return *this;
 		if (_y >= len) _y = len;
@@ -116,27 +115,35 @@ private:
 	size_t len = 0;
 };
 
+typedef String MyString;
+
 int main() {
+	MyString  s1("initial  test");
+	cout << "S1:\t" << s1.getMyString() << endl;
 
-	String str1("12345678");
-	str1.reverse();
-	cout << str1.c_str() << endl;
+	const char* temp = "Hello  World";
+	s1 = temp;
+	cout << "S1:\t" << s1.getMyString() << endl;
 
-	String str2("87654321");
-	cout << (str1 == str2) << endl;
+	char  tempTwo[25];
+	strcpy(tempTwo, ";  nice  to  be  here!");
+	s1 += tempTwo;
+	cout << "tempTwo:\t" << tempTwo << endl;
+	cout << "S1:\t" << s1.getMyString() << endl;
 
-	str1 = "88887";
-	str2 = "88888";
-	cout << (str1 < str2) << endl;
+	cout << "S1[4]:\t" << s1[4] << endl;
+	s1[4] = 'x';
+	cout << "S1:\t" << s1.getMyString() << endl;
 
-	str1 = "987654";
-	cout << str1.cut(1, 6).c_str() << endl;
+	cout << "S1[999]:\t" << s1[999] << endl;
 
-	String str3;
-	cout << str3.empty() << endl;
+	MyString  s2("  Another  myString");
+	MyString  s3;
+	s3 = s1 + s2;
+	cout << "S3:\t" << s3.getMyString() << endl;
 
-	str2 = str1 + str3;
-	cout << str2.c_str() << endl;
-
+	MyString  s4;
+	s4 = "Why  does  this  work?";
+	cout << "S4:\t" << s4.getMyString() << endl;
 	return  0;
 }
